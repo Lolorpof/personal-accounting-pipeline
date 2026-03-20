@@ -30,3 +30,5 @@ analytics/
 metastore_db/
 derby.log
 spark-warehouse/
+
+CLAUDE.md

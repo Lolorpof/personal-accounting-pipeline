@@ -1,8 +1,8 @@
 # Midterm Report
 
-**Student Name:** _______________  
-**Student ID:** _______________  
-**Date:** _______________
+**Student Name:** Sirawit Sirabanchongkran
+**Student ID:** 650610810  
+**Date:** 20/03/69
 
 ---
 
@@ -10,19 +10,19 @@
 
 > How many total transactions are there?
 
-_Your answer here._
+7,258,600 total transactions
 
 > How many unique family members, merchants, and categories?
 
-_Your answer here._
+4 unique family members, 48 unique merchants, and 18 unique categories in transactions.
 
 > How many rows have null or empty `amount` values?
 
-_Your answer here._
+1,450,421 rows with null or empty 'amount'
 
 > What is the date range of the transactions?
 
-_Your answer here._
+the date range in transactions is 2010-01-01 to 2025-12-31
 
 ---
 
@@ -49,17 +49,17 @@ _Your answer here._
 _Your answer here. Show your calculation:_
 
 | Year | Avg Amount | YoY Change (%) |
-|------|-----------|----------------|
-| 2016 | | |
-| 2017 | | |
-| 2018 | | |
-| 2019 | | |
-| 2020 | | |
-| 2021 | | |
-| 2022 | | |
-| 2023 | | |
-| 2024 | | |
-| 2025 | | |
+| ---- | ---------- | -------------- |
+| 2016 |            |                |
+| 2017 |            |                |
+| 2018 |            |                |
+| 2019 |            |                |
+| 2020 |            |                |
+| 2021 |            |                |
+| 2022 |            |                |
+| 2023 |            |                |
+| 2024 |            |                |
+| 2025 |            |                |
 
 _Your explanation:_
 
@@ -189,7 +189,7 @@ _Your answer (3–5 sentences):_
 _Your answer (3–5 sentences):_
 
 | Budget Type | Total Spending | Percentage |
-|-------------|---------------|------------|
-| Needs | | |
-| Wants | | |
-| Savings | | |
+| ----------- | -------------- | ---------- |
+| Needs       |                |            |
+| Wants       |                |            |
+| Savings     |                |            |
