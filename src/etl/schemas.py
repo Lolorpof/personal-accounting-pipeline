@@ -45,22 +45,23 @@ merchants_schema = StructType([
     StructField("location", StringType(), True)
 ])
 
-spark = SparkSession.builder.appName('Read').getOrCreate()
+if __name__ == "__main__":
+    spark = SparkSession.builder.appName('Read').getOrCreate()
 
-df_transactions = spark.read.csv('data/transactions.csv', schema=transactions_schema, header=True)
-df_categories = spark.read.csv('data/categories.csv', schema=categories_schema, header=True)
-df_merchants = spark.read.csv('data/merchants.csv', schema=merchants_schema, header=True)
+    df_transactions = spark.read.csv('data/transactions.csv', schema=transactions_schema, header=True)
+    df_categories = spark.read.csv('data/categories.csv', schema=categories_schema, header=True)
+    df_merchants = spark.read.csv('data/merchants.csv', schema=merchants_schema, header=True)
 
-# 1.1
-print(f"Total Transactions: {df_transactions.count()}")
+    # 1.1
+    print(f"Total Transactions: {df_transactions.count()}")
 
-# 1.2
-print(f"Unique family members: {df_transactions.dropDuplicates(["member_id"]).count()}")
-print(f"Unique merchants: {df_transactions.dropDuplicates(["merchant_id"]).count()}")
-print(f"Unique categories: {df_transactions.dropDuplicates(["category_id"]).count()}")
+    # 1.2
+    print(f"Unique family members: {df_transactions.dropDuplicates(["member_id"]).count()}")
+    print(f"Unique merchants: {df_transactions.dropDuplicates(["merchant_id"]).count()}")
+    print(f"Unique categories: {df_transactions.dropDuplicates(["category_id"]).count()}")
 
-# 1.3
-print(f"Null or Empty amount: {df_transactions.filter(col("amount").isNull() | (col("amount") == "")).count()}")
+    # 1.3
+    print(f"Null or Empty amount: {df_transactions.filter(col("amount").isNull() | (col("amount") == "")).count()}")
 
-# 1.4
-df_transactions.select(min("date").alias("min_date"), max("date").alias("max_date")).show()
+    # 1.4
+    df_transactions.select(min("date").alias("min_date"), max("date").alias("max_date")).show()

@@ -10,19 +10,19 @@
 
 > How many total transactions are there?
 
-7,258,600 total transactions
+_7,258,600 total transactions_
 
 > How many unique family members, merchants, and categories?
 
-4 unique family members, 48 unique merchants, and 18 unique categories in transactions.
+_4 unique family members, 48 unique merchants, and 18 unique categories in transactions._
 
 > How many rows have null or empty `amount` values?
 
-1,450,421 rows with null or empty 'amount'
+_1,450,421 rows with null or empty 'amount'_
 
 > What is the date range of the transactions?
 
-the date range in transactions is 2010-01-01 to 2025-12-31
+_The date range in transactions is 2010-01-01 to 2025-12-31._
 
 ---
 
@@ -30,15 +30,15 @@ the date range in transactions is 2010-01-01 to 2025-12-31
 
 > What join type did you use for enriching transactions, and why?
 
-_Your answer here._
+_Left join for both categories and merchants because We need to make sure we keep every transactions._
 
 > How many transactions have no matching merchant in the merchants table?
 
-_Your answer here._
+_0 transactions, which means every transactions has a matching merchant._
 
 > What would happen if you used an inner join instead?
 
-_Your answer here._
+_The transactions that don't have a matching merchant or category will be removed. But there's all transactions have a matched with merchant and category, so the results will be the same._
 
 ---
 
@@ -46,34 +46,34 @@ _Your answer here._
 
 > Look at the average transaction amount per year table. Do you notice a trend? Calculate the approximate year-over-year percentage change. What might explain this?
 
-_Your answer here. Show your calculation:_
+_The spending by year increased overtime._
 
 | Year | Avg Amount | YoY Change (%) |
 | ---- | ---------- | -------------- |
-| 2016 |            |                |
-| 2017 |            |                |
-| 2018 |            |                |
-| 2019 |            |                |
-| 2020 |            |                |
-| 2021 |            |                |
-| 2022 |            |                |
-| 2023 |            |                |
-| 2024 |            |                |
-| 2025 |            |                |
+| 2016 | 55.9825    | -              |
+| 2017 | 57.1175    | 2.0274         |
+| 2018 | 58.3302    | 2.1232         |
+| 2019 | 59.4676    | 1.9498         |
+| 2020 | 60.5863    | 1.8812         |
+| 2021 | 61.8715    | 2.1213         |
+| 2022 | 63.0809    | 1.9547         |
+| 2023 | 64.4120    | 2.1102         |
+| 2024 | 65.5414    | 1.7534         |
+| 2025 | 66.9405    | 2.1347         |
 
-_Your explanation:_
+_The spending by year shows sign of steadily increasing by year. If you calculate the yoy change, the percentage is always positive. which shows it increasing._
 
 > Which category has the highest total spending? Which has grown the fastest over 10 years?
 
-_Your answer here._
+_'Groceries' is the category with the highest total spending, while 'Electronics' is the category with the fastest growth over 10 years._
 
 > Compare spending between family members. Who spends the most? On what?
 
-_Your answer here._
+_MEM01 spends the most on 'Groceries'._
 
 > What percentage of transactions fall in each spending tier? Has this distribution changed over the years?
 
-_Your answer here._
+_Overall, 14% falls in 'micro', 50% falls in 'small', 31% falls in 'medium', and 5% falls in 'large'. The distributions doesn't change much overall, with 'medium' and 'large' spending tier increasing, while 'micro' and 'small' spending tier decreasing._
 
 ---
 
@@ -85,7 +85,7 @@ _The family has some questions about how the system works._
 
 > "We just found out one of the merchants changed their name last year. Where in the pipeline do we update this, and what layers need to be reprocessed?"
 
-_Your answer (3–5 sentences):_
+_Merchants changing names means data in provided CSV file changes, which means we need to update/reprocessed everything where there's use of merchant data, from 'raw' layer all the way through 'analytics' layer._
 
 ---
 
@@ -93,7 +93,7 @@ _Your answer (3–5 sentences):_
 
 > "Our daughter started college and has her own credit card now. How do we add a new family member to the system without breaking existing data?"
 
-_Your answer (3–5 sentences):_
+_You just need to assigned your daughter to a new 'member_id'._
 
 ---
 
@@ -101,7 +101,7 @@ _Your answer (3–5 sentences):_
 
 > "We want to know our average monthly grocery spending. Walk us through exactly which transformations and joins produce this number."
 
-_Your answer (3–5 sentences):_
+_We use the staged transactions, which already joins every tables for us. We group the staged transactions by 'date(year and month)' and 'category_name', then we use aggregate function(sum) to sum the 'amount' to get total spending for each category for each month._
 
 ---
 
@@ -109,7 +109,7 @@ _Your answer (3–5 sentences):_
 
 > "Last month's bank export had 500 duplicate transactions. How does your pipeline handle this? If it doesn't yet, what would you add?"
 
-_Your answer (3–5 sentences):_
+_We can handle this issue by using dropDuplicate() function on 'transaction_id' column._
 
 ---
 
@@ -119,7 +119,7 @@ _Your answer (3–5 sentences):_
 
 _Hint: Think about RPO (Recovery Point Objective) and RTO (Recovery Time Objective)._
 
-_Your answer (3–5 sentences):_
+_RPO = 1 month. The most data you could lose equals one month of transactions — since the pipeline runs monthly when the bank exports new data. If a crash happens just before backup, you lose that month's export. RTO depends on how fast the bank can export the data, because re-processing the raw data doesn't take a long time but if the bank can't export it fast enough, it will take a long time there._
 
 ---
 
@@ -131,7 +131,7 @@ _The family's developer friend has some technical questions._
 
 > "If we set up CI/CD for this project, what would the pipeline look like? What gets tested automatically, and what triggers the tests?"
 
-_Your answer (3–5 sentences):_
+_The pipeline starts by installing dependencies as the first step, then we should run the tests we implemented to see if it all passes, after that we import the new CSV files, then, we write the raw layer parquet from the imported CSV file, after that, we write staged layer parquet, lastly we write all the analytics we needs according to the business interest._
 
 ---
 
@@ -151,9 +151,10 @@ Example format:
 
 Your DAG:
 
-
-
-
+Install Dependencies ──▶ Import CSV files ──▶ Write raw parquet ──▶ Write staged parquet
+                                                                              │
+   ┌──────────────────────────────────────────────────────────────────────────┘
+   └─▶ Write enriched & Analytics parquets
 ```
 
 ---
@@ -166,9 +167,9 @@ _The family wants your professional opinion._
 
 > "We looked at your yearly average transaction table and prices seem to go up. Can you calculate the exact rate? Is it consistent across all categories?"
 
-_Show your work:_
+_Calculate the avg yoy change = (2.0274 + 2.1232 + 1.9498 + 1.8812 + 2.1213 + 1.9547 + 2.1102 + 1.7534 + 2.1347) / 9 = 2.01% per year_
 
-_Your answer (3–5 sentences):_
+_The total average YoY change is around 2.01%. For average YoY change per category, the lowest YoY is 0.24% and the highest is 0.35%, which is very consistent._
 
 ---
 
@@ -176,9 +177,9 @@ _Your answer (3–5 sentences):_
 
 > "Based on your summary tables, give us 3 actionable recommendations for how we can reduce spending next year."
 
-1. _Recommendation 1:_
-2. _Recommendation 2:_
-3. _Recommendation 3:_
+1. _See who's the family member with the highest spending, make them reduce their spending._
+2. _Set a cap for category that has the highest spending._
+3. _Try to reduce 'medium' and 'large' spending because those have been increasing over the years._
 
 ---
 
@@ -186,10 +187,10 @@ _Your answer (3–5 sentences):_
 
 > "Which spending categories are 'needs' vs 'wants'? What percentage of our total spending goes to each?"
 
-_Your answer (3–5 sentences):_
+_There's already 'budget_type' column in our data, so we will use this to get the total spending for each budget type. Belows is the summary._
 
-| Budget Type | Total Spending | Percentage |
-| ----------- | -------------- | ---------- |
-| Needs       |                |            |
-| Wants       |                |            |
-| Savings     |                |            |
+| Budget Type | Total Spending   | Percentage |
+| ----------- | ---------------- | ---------- |
+| Needs       | 2,160,425,364.36 | 49.77      |
+| Wants       | 1,902,196,734.93 | 6.42       |
+| Savings     | 278,489,059.78   | 43.82      |
