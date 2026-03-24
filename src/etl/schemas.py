@@ -61,7 +61,7 @@ if __name__ == "__main__":
     print(f"Unique categories: {df_transactions.dropDuplicates(["category_id"]).count()}")
 
     # 1.3
-    print(f"Null or Empty amount: {df_transactions.filter(col("amount").isNull() | (col("amount") == "")).count()}")
+    print(f"Null or Empty amount: {df_transactions.filter(col("amount").isNull()).count()}")
 
     # 1.4
     df_transactions.select(min("date").alias("min_date"), max("date").alias("max_date")).show()
